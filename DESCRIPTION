@@ -1,0 +1,20 @@
+Package: ntriples
+Title: N-Triples Serialization and RDF Utility Functions
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Daniel", family = "Antal", 
+           email = "daniel.antal@dataobservatory.eu", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7513-6760")
+           )) 
+Description: Provides lightweight, dependency-minimal tools for generating 
+    and validating RDF N-Triples in R. Functions include IRI construction 
+    and sanitization, XSD datatype conversion, literal formatting, and 
+    triple assembly from data frames or lists. Designed to be reusable by 
+    other packages, such as those implementing higher-level RDF data 
+    models, without requiring full RDF library dependencies.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
