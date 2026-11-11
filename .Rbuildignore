@@ -4,3 +4,7 @@
 ^\.positai$
 ^\.claude$
 ^review-ntriples.txt$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^LICENSE\.md$
