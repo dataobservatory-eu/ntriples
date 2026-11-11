@@ -4,12 +4,7 @@
 \alias{person_triples}
 \title{Serialize a person as RDF provenance statements}
 \usage{
-person_triples(
-  x,
-  ontology = c("prov", "foaf"),
-  subject = NULL,
-  resource = NULL
-)
+person_triples(x, ontology = c("prov", "foaf"), subject = NULL)
 }
 \arguments{
 \item{x}{A single \code{utils::person} object.}
@@ -18,8 +13,6 @@ person_triples(
 
 \item{subject}{Optional IRI or blank-node identifier for the person.
 Overrides any authority identifier found in \code{x}.}
-
-\item{resource}{Reserved for future resource relationships; currently unused.}
 }
 \value{
 A character vector containing N-Triples statements.

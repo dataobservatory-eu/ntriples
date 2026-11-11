@@ -1,4 +1,3 @@
-
 #' Serialize a person as RDF provenance statements
 #'
 #' Creates RDF statements describing a `utils::person` as an agent,
@@ -16,9 +15,9 @@
 #' @return A character vector containing N-Triples statements.
 #' @export
 person_triples <- function(
-    x,
-    ontology = c("prov", "foaf"),
-    subject = NULL
+  x,
+  ontology = c("prov", "foaf"),
+  subject = NULL
 ) {
   ontology <- match.arg(ontology)
 
