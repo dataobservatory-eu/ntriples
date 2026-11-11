@@ -19,8 +19,9 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     datasets,
     knitr,
-    rmarkdown,
-    testthat (>= 3.0.0) utils)
+    rmarkdown, 
+    utils, 
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.1.0
 VignetteBuilder: knitr

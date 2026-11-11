@@ -7,52 +7,104 @@
 
 <!-- badges: end -->
 
-The goal of ntriples is to provide lightweight, dependency-minimal tools
-for generating and validating RDF N-Triples in R. Functions include IRI
-construction and sanitization, XSD datatype conversion, literal
-formatting, and triple assembly from data frames or lists. Designed to
-be reusable by other packages, such as those implementing higher-level
-RDF data models, without requiring full RDF library dependencies.
+The **Resource Description Framework (RDF)** is a W3C standard for
+describing resources and their relationships. It makes metadata about
+datasets, visualisations, and other outputs created in R understandable
+outside the R ecosystem. **N-Triples** is a simple, line-based RDF
+format: each statement identifies a subject, predicate, and object. The
+`ntriples` package provides lightweight tools for creating these
+interoperable statements without a full RDF library.
 
 ## Installation
 
-You can install the development version of ntriples from
-[GitHub](https://github.com/) with:
+Install the development version from GitHub:
 
 ``` r
 # install.packages("pak")
 pak::pak("dataobservatory-eu/ntriples")
 ```
 
-## Example
+## Example: Growth of orange trees
 
-This is a basic example which shows you how to solve a common problem:
+The built-in `Orange` dataset records orange-tree growth. We describe
+the published dataset [*Draper–Smith (1998): Growth of Orange
+Trees*](https://doi.org/10.5281/zenodo.14917851), including its title
+and creators, as RDF metadata. The observations themselves remain in R
+(or can be exported separately as CSV).
 
 ``` r
 library(ntriples)
-## basic example code
+data("Orange", package = "datasets")
+head(Orange)
+#>   Tree  age circumference
+#> 1    1  118            30
+#> 2    1  484            58
+#> 3    1  664            87
+#> 4    1 1004           115
+#> 5    1 1231           120
+#> 6    1 1372           142
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Identify the dataset with its DOI, and represent its creators using
+`utils::person()`. Draper has a VIAF authority identifier; Smith is
+represented by a local RDF *blank node*.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+dataset_iri <- iri("https://doi.org/10.5281/zenodo.14917851")
+
+draper <- utils::person(
+  given = "N.R.", family = "Draper", role = "cre",
+  comment = c(VIAF = "http://viaf.org/viaf/84585260")
+)
+smith <- utils::person(given = "H.", family = "Smith", role = "cre")
+
+draper_iri <- iri("http://viaf.org/viaf/84585260")
+smith_id <- "_:smith"
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+We reuse standard RDF vocabularies rather than inventing metadata
+properties: **DCAT** identifies datasets, **Dublin Core Terms (DCT)**
+describes them, and **PROV-O** records provenance. `person_triples()`
+also uses **RDFS** for agent labels, while `rdf_term()` uses **XSD**
+datatypes for literal values. Namespace variables keep the code
+readable; N-Triples itself writes complete IRIs.
 
-You can also embed plots, for example:
+``` r
+prov <- "http://www.w3.org/ns/prov#"
+dcat <- "http://www.w3.org/ns/dcat#"
+dct  <- "http://purl.org/dc/terms/"
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+triples <- n_triples(c(
+  n_triple(dataset_iri, "a", paste0(dcat, "Dataset")),
+  n_triple(dataset_iri, paste0(dct, "title"), "Growth of Orange Trees"),
+  n_triple(dataset_iri, paste0(prov, "wasAttributedTo"), draper_iri),
+  n_triple(dataset_iri, paste0(prov, "wasAttributedTo"), smith_id),
+  person_triples(draper),
+  person_triples(smith, subject = smith_id)
+))
+cat(triples, sep = "\n")
+#> <https://doi.org/10.5281/zenodo.14917851> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/dcat#Dataset> .
+#> <https://doi.org/10.5281/zenodo.14917851> <http://purl.org/dc/terms/title> "Growth of Orange Trees"^^<http://www.w3.org/2001/XMLSchema#string> .
+#> <https://doi.org/10.5281/zenodo.14917851> <http://www.w3.org/ns/prov#wasAttributedTo> <http://viaf.org/viaf/84585260> .
+#> <https://doi.org/10.5281/zenodo.14917851> <http://www.w3.org/ns/prov#wasAttributedTo> _:smith .
+#> <https://viaf.org/viaf/http://viaf.org/viaf/84585260> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .
+#> <https://viaf.org/viaf/http://viaf.org/viaf/84585260> <http://www.w3.org/2000/01/rdf-schema#label> "N.R. Draper"^^<http://www.w3.org/2001/XMLSchema#string> .
+#> _:smith <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .
+#> _:smith <http://www.w3.org/2000/01/rdf-schema#label> "H. Smith"^^<http://www.w3.org/2001/XMLSchema#string> .
+```
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Each line describes a resource or relationship using globally defined
+terms. For example, `prov:wasAttributedTo` links the dataset to a
+creator; the resulting N-Triples statement contains its full IRI. This
+metadata can be used by other RDF-aware systems without reading R
+objects.
+
+To save the statements as a portable N-Triples file:
+
+``` r
+writeLines(triples, "orange-provenance.nt", useBytes = TRUE)
+```
+
+For a fuller explanation of RDF terms, identifiers, vocabularies, and
+serialization, see the introductory vignette
+(`vignette("intro", package = "ntriples")`).
