@@ -8,3 +8,6 @@
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$
+^CONTRIBUTING\.md$
+^codemeta\.json$
+^CODE_OF_CONDUCT\.md$

@@ -10,9 +10,11 @@ Authors@R:
 Description: Provides lightweight, dependency-minimal tools for
     serializing RDF N-Triples in R. Supports IRI validation,
     typed RDF literals, date-time serialization, and provenance
-    statements for utils::person objects using PROV-O or FOAF.
+    statements for `utils::person` objects using PROV-O or FOAF.
     Designed for reuse by packages implementing higher-level
     RDF data models and provenance workflows.
+URL: https://ntriples.dataobservatory.eu/
+BugReports: https://github.com/dataobservatory-eu/ntriples/issues/
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
