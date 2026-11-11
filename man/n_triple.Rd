@@ -3,34 +3,19 @@
 \name{n_triple}
 \alias{n_triple}
 \title{Create an N-Triple}
-\source{
-\href{https://www.w3.org/TR/n-triples/}{RDF 1.1 N-Triples}
-}
 \usage{
 n_triple(s, p, o)
 }
 \arguments{
-\item{s}{The subject of a triplet.}
+\item{s}{Subject IRI or blank node.}
 
-\item{p}{The predicate of a triplet.}
+\item{p}{Predicate IRI.}
 
-\item{o}{The object of a triplet.}
+\item{o}{Object IRI, blank node, literal, or supported R scalar.}
 }
 \value{
-A character vector containing one N-Triple string.
+A single character string containing an N-Triple.
 }
 \description{
-Create a single N-Triple triple.
-}
-\details{
-N-Triples is an easy to parse line-based subset of Turtle to serialize
-RDF. An N-Triple triple is a sequence of RDF terms representing the subject,
-predicate and object of an RDF Triple. Use \code{\link[=n_triples]{n_triples()}} to serialize
-multiple statements.
-}
-\examples{
-s <- "http://example.org/show/218"
-p <- "http://www.w3.org/2000/01/rdf-schema#label"
-o <- "That Seventies Show"
-n_triple(s, p, o)
+Serialize a subject, predicate, and object as an N-Triples statement.
 }
