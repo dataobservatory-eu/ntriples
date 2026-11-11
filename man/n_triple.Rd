@@ -2,20 +2,40 @@
 % Please edit documentation in R/n_triples.R
 \name{n_triple}
 \alias{n_triple}
-\title{Create an N-Triple}
+\title{Create a single N-Triple statement}
 \usage{
 n_triple(s, p, o)
 }
 \arguments{
 \item{s}{Subject IRI or blank node.}
 
-\item{p}{Predicate IRI.}
+\item{p}{Predicate IRI, or \code{"a"} for \code{rdf:type}.}
 
 \item{o}{Object IRI, blank node, literal, or supported R scalar.}
 }
 \value{
-A single character string containing an N-Triple.
+A single character string containing an N-Triple statement.
 }
 \description{
-Serialize a subject, predicate, and object as an N-Triples statement.
+Assemble a subject, predicate, and object into a single RDF statement
+in N-Triples syntax.
+}
+\details{
+This function converts individual values using \code{\link[=rdf_term]{rdf_term()}} and
+validates their positions in the statement. Subjects must be IRIs or
+blank nodes, predicates must be IRIs, and objects may also be literals.
+
+Use \code{\link[=n_triples]{n_triples()}} as the main entry point for collecting statements
+into a unique set of N-Triples.
+}
+\examples{
+n_triple(
+  "https://example.org/dataset/1",
+  "http://purl.org/dc/terms/title",
+  "Growth of Orange Trees"
+)
+
+}
+\seealso{
+\code{\link[=n_triples]{n_triples()}}, \code{\link[=rdf_term]{rdf_term()}}, \code{\link[=iri]{iri()}}
 }

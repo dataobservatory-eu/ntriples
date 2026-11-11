@@ -226,4 +226,3 @@ test_that("n_triple() accepts valid RDF objects", {
   # Language-tagged literals
   expect_true(grepl('"Bonjour"@fr', n_triple(s, p, '"Bonjour"@fr'), fixed = TRUE))
 })
-

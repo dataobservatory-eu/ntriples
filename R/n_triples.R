@@ -7,10 +7,17 @@
 #' and widely supported. For details, see the
 #' [W3C RDF 1.2 N-Triples specification](https://www.w3.org/TR/rdf12-n-triples/).
 #'
-#' @param triples A character vector of concatenated N-Triples, created with
+#' Use [`rdf_term()`] to serialize individual R values as RDF terms,
+#' [`n_triple()`] to assemble a subject, predicate, and object into a
+#' statement, and `n_triples()` to collect statements and remove duplicates.
+#'
+#' @param triples A character vector of N-Triples statements, created with
 #'   [`n_triple()`].
 #'
 #' @return A character vector of unique N-Triple strings.
+#'
+#' @seealso [`rdf_term()`], [`n_triple()`], [`iri()`],
+#'   [`person_triples()`]
 #'
 #' @examples
 #' triple_1 <- n_triple(
@@ -29,16 +36,38 @@
 #'
 #' @export
 
-
 n_triples <- function(triples) {
   unique(triples)
 }
 
 
+#' Create a single N-Triple statement
+#'
+#' Assemble a subject, predicate, and object into a single RDF statement
+#' in N-Triples syntax.
+#'
+#' This function converts individual values using [`rdf_term()`] and
+#' validates their positions in the statement. Subjects must be IRIs or
+#' blank nodes, predicates must be IRIs, and objects may also be literals.
+#'
+#' Use [`n_triples()`] as the main entry point for collecting statements
+#' into a unique set of N-Triples.
+#'
+#' @param s Subject IRI or blank node.
 #' @param p Predicate IRI, or `"a"` for `rdf:type`.
 #' @param o Object IRI, blank node, literal, or supported R scalar.
 #'
-#' @return A single character string containing an N-Triple.
+#' @return A single character string containing an N-Triple statement.
+#'
+#' @seealso [`n_triples()`], [`rdf_term()`], [`iri()`]
+#'
+#' @examples
+#' n_triple(
+#'   "https://example.org/dataset/1",
+#'   "http://purl.org/dc/terms/title",
+#'   "Growth of Orange Trees"
+#' )
+#'
 #' @export
 n_triple <- function(s, p, o) {
   s <- rdf_term(s)

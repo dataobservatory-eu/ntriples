@@ -7,7 +7,7 @@
 n_triples(triples)
 }
 \arguments{
-\item{triples}{A character vector of concatenated N-Triples, created with
+\item{triples}{A character vector of N-Triples statements, created with
 \code{\link[=n_triple]{n_triple()}}.}
 }
 \value{
@@ -21,6 +21,10 @@ interoperable metadata.
 N-Triples is a line-based serialization format for RDF. It is easy to parse
 and widely supported. For details, see the
 \href{https://www.w3.org/TR/rdf12-n-triples/}{W3C RDF 1.2 N-Triples specification}.
+
+Use \code{\link[=rdf_term]{rdf_term()}} to serialize individual R values as RDF terms,
+\code{\link[=n_triple]{n_triple()}} to assemble a subject, predicate, and object into a
+statement, and \code{n_triples()} to collect statements and remove duplicates.
 }
 \examples{
 triple_1 <- n_triple(
@@ -37,4 +41,8 @@ triple_2 <- n_triple(
 
 n_triples(c(triple_1, triple_2, triple_1))
 
+}
+\seealso{
+\code{\link[=rdf_term]{rdf_term()}}, \code{\link[=n_triple]{n_triple()}}, \code{\link[=iri]{iri()}},
+\code{\link[=person_triples]{person_triples()}}
 }
