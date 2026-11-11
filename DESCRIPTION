@@ -15,7 +15,7 @@ Description: Provides lightweight, dependency-minimal tools for
     RDF data models and provenance workflows.
 URL: https://ntriples.dataobservatory.eu/
 BugReports: https://github.com/dataobservatory-eu/ntriples/issues/
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
