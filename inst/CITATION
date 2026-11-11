@@ -7,5 +7,6 @@ bibentry(
            comment = c(ORCID = "0000-0001-7513-6760")
            ),
   year = "2026",
+  version = "v0.1.0",
   url = "https://ntriples.dataobservatory.eu/"
 )

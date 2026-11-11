@@ -1,6 +1,6 @@
-# ntriples 0.0.1
+# ntriples 0.1.0
 
-2The `ntriples` package extracts RDF N-Triples serialization functionality originally developed for the CRAN and rOpenSci package [`dataset`](https://docs.ropensci.org/dataset/) into a standalone, lightweight R utility.
+The `ntriples` package extracts RDF N-Triples serialization functionality originally developed for the CRAN and rOpenSci package [`dataset`](https://docs.ropensci.org/dataset/) into a standalone, lightweight R utility.
 
 Separating RDF serialization from dataset management makes this functionality reusable by other R packages and applications without requiring the higher-level data structures or dependencies of `dataset`. The package supports interoperable metadata and provenance for datasets, visualisations, and other resources created in R.
 
