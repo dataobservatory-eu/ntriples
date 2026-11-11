@@ -1,0 +1,11 @@
+bibentry(
+  bibtype = "Manual",
+  title = "ntriples: Lightweight RDF N-Triples Serialization in R",
+  author = person(given = "Daniel", family = "Antal",
+           email = "daniel.antal@dataobservatory.eu",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7513-6760")
+           ),
+  year = "2026",
+  url = "https://ntriples.dataobservatory.eu/"
+)
