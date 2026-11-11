@@ -7,11 +7,27 @@
 iri(x)
 }
 \arguments{
-\item{A}{string to convert into an IRI}
+\item{x}{A character vector of absolute IRIs.}
 }
 \value{
-An IRI
+A character vector with class \code{iri}.
 }
 \description{
-Create IRIs
+Validate absolute IRIs and assign the \code{iri} class.
+Identifiers are preserved exactly as supplied.
+}
+\examples{
+# IRI from the W3C N-Triples specification
+subject <- iri("http://one.example/subject1")
+subject
+
+# Use the IRI in an N-Triples statement
+n_triple(
+  subject,
+  "http://one.example/predicate1",
+  "http://one.example/object1"
+)
+}
+\references{
+W3C. \href{https://www.w3.org/TR/rdf12-n-triples/}{RDF 1.2 N-Triples}.
 }
