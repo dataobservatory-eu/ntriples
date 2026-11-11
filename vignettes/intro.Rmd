@@ -71,7 +71,7 @@ The `role = "cre"` argument records the creator role in R. We express the relati
 
 ### Create prefixes
 
-RDF vocabularies provide standard terms for describing resources and their relationships. Each vocabulary has a namespace IRI, commonly abbreviated using a *prefix*. For example, `prov:wasAttributedTo` refers to [`http://www.w3.org/ns/prov#wasAttributedTo`](http://www.w3.org/ns/prov#wasAttributedTo).
+RDF vocabularies provide standard terms for describing resources and their relationships. Each vocabulary has a namespace IRI, commonly abbreviated using a *prefix*. For example, `prov:wasAttributedTo` refers to [`http://www.w3.org/ns/prov#wasAttributedTo`](https://www.w3.org/ns/prov#wasAttributedTo).
 
 We use several established RDF vocabularies and datatype definitions:
 
@@ -93,7 +93,7 @@ dcat <- "http://www.w3.org/ns/dcat#"
 dct <- "http://purl.org/dc/terms/"
 ```
 
-In RDF documentation, long IRIs are often abbreviated using prefixes. For example, `prov:wasAttributedTo` is shorthand for [`http://www.w3.org/ns/prov#wasAttributedTo`](http://www.w3.org/ns/prov#wasAttributedTo).
+In RDF documentation, long IRIs are often abbreviated using prefixes. For example, `prov:wasAttributedTo` is shorthand for [`http://www.w3.org/ns/prov#wasAttributedTo`](https://www.w3.org/ns/prov#wasAttributedTo).
 
 In our R code, we use `paste0(prov, "wasAttributedTo")` to construct this complete IRI without repeatedly typing the namespace. The N-Triples format requires complete IRIs, so the abbreviated form `prov:wasAttributedTo` does not appear in the serialized output.
 
