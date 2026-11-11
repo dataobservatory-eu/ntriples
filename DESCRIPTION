@@ -1,23 +1,26 @@
 Package: ntriples
 Title: N-Triples Serialization and RDF Utility Functions
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     c(person(given = "Daniel", family = "Antal", 
            email = "daniel.antal@dataobservatory.eu", 
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7513-6760")
            )) 
-Description: Provides lightweight, dependency-minimal tools for generating 
-    and validating RDF N-Triples in R. Functions include IRI construction 
-    and sanitization, XSD datatype conversion, literal formatting, and 
-    triple assembly from data frames or lists. Designed to be reusable by 
-    other packages, such as those implementing higher-level RDF data 
-    models, without requiring full RDF library dependencies.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Provides lightweight, dependency-minimal tools for
+    serializing RDF N-Triples in R. Supports IRI validation,
+    typed RDF literals, date-time serialization, and provenance
+    statements for utils::person objects using PROV-O or FOAF.
+    Designed for reuse by packages implementing higher-level
+    RDF data models and provenance workflows.
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    testthat (>= 3.0.0)
+    datasets,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0) utils)
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr
