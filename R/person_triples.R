@@ -13,6 +13,16 @@
 #' @param subject Optional IRI or blank-node identifier for the person.
 #'   Overrides any authority identifier found in `x`.
 #' @return A character vector containing N-Triples statements.
+#' @examples
+#' author <- utils::person(
+#'   given = "Jane", family = "Doe",
+#'   comment = c(ORCID = "0000-0002-1825-0097")
+#' )
+#' person_triples(author)
+#'
+#' # Use a blank node when no authority identifier is available
+#' contributor <- utils::person(given = "John", family = "Smith")
+#' person_triples(contributor, subject = "_:john")
 #' @export
 person_triples <- function(
   x,

@@ -27,3 +27,14 @@ Otherwise, a blank-node identifier must be supplied through \code{subject}.
 Person roles are deliberately ignored; role serialization belongs
 to a separate function.
 }
+\examples{
+author <- utils::person(
+  given = "Jane", family = "Doe",
+  comment = c(ORCID = "0000-0002-1825-0097")
+)
+person_triples(author)
+
+# Use a blank node when no authority identifier is available
+contributor <- utils::person(given = "John", family = "Smith")
+person_triples(contributor, subject = "_:john")
+}

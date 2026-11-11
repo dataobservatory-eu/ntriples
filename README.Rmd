@@ -48,7 +48,7 @@ dataset_iri <- iri("https://doi.org/10.5281/zenodo.14917851")
 
 draper <- utils::person(
   given = "N.R.", family = "Draper", role = "cre",
-  comment = c(VIAF = "http://viaf.org/viaf/84585260")
+  comment = c(VIAF = "84585260")
 )
 smith <- utils::person(given = "H.", family = "Smith", role = "cre")
 

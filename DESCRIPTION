@@ -13,7 +13,7 @@ Description: Provides lightweight, dependency-minimal tools for
     statements for `utils::person` objects using PROV-O or FOAF.
     Designed for reuse by packages implementing higher-level
     RDF data models and provenance workflows.
-Language: en-US
+Language: en-GB
 URL: https://ntriples.dataobservatory.eu/
 BugReports: https://github.com/dataobservatory-eu/ntriples/issues/
 License: GPL (>= 3) + file LICENSE
@@ -29,4 +29,3 @@ Suggests:
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.1.0
 VignetteBuilder: knitr
-Language: en-US

@@ -57,7 +57,7 @@ dataset_iri <- iri("https://doi.org/10.5281/zenodo.14917851")
 
 draper <- utils::person(
   given = "N.R.", family = "Draper", role = "cre",
-  comment = c(VIAF = "http://viaf.org/viaf/84585260")
+  comment = c(VIAF = "84585260")
 )
 smith <- utils::person(given = "H.", family = "Smith", role = "cre")
 
@@ -90,8 +90,8 @@ cat(triples, sep = "\n")
 #> <https://doi.org/10.5281/zenodo.14917851> <http://purl.org/dc/terms/title> "Growth of Orange Trees"^^<http://www.w3.org/2001/XMLSchema#string> .
 #> <https://doi.org/10.5281/zenodo.14917851> <http://www.w3.org/ns/prov#wasAttributedTo> <http://viaf.org/viaf/84585260> .
 #> <https://doi.org/10.5281/zenodo.14917851> <http://www.w3.org/ns/prov#wasAttributedTo> _:smith .
-#> <https://viaf.org/viaf/http://viaf.org/viaf/84585260> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .
-#> <https://viaf.org/viaf/http://viaf.org/viaf/84585260> <http://www.w3.org/2000/01/rdf-schema#label> "N.R. Draper"^^<http://www.w3.org/2001/XMLSchema#string> .
+#> <https://viaf.org/viaf/84585260> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .
+#> <https://viaf.org/viaf/84585260> <http://www.w3.org/2000/01/rdf-schema#label> "N.R. Draper"^^<http://www.w3.org/2001/XMLSchema#string> .
 #> _:smith <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .
 #> _:smith <http://www.w3.org/2000/01/rdf-schema#label> "H. Smith"^^<http://www.w3.org/2001/XMLSchema#string> .
 ```

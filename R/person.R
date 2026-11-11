@@ -18,7 +18,7 @@ get_person_iri <- function(p) {
   identifiers <- c(
     orcid = "https://orcid.org/",
     isni = "https://isni.org/isni/",
-    viaf = "https://viaf.org/viaf/",
+    viaf = "http://viaf.org/viaf/",
     wikidata = "https://www.wikidata.org/wiki/"
   )
 
