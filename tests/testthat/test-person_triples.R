@@ -56,7 +56,7 @@ test_that("person_triples() resolves authority identifiers", {
     ),
     VIAF = c(
       "123456",
-      "https://viaf.org/viaf/123456"
+      "http://viaf.org/viaf/123456"
     ),
     Wikidata = c(
       "Q12345",

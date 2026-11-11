@@ -81,3 +81,4 @@ test_that("get_person_iri() handles missing and invalid identifiers", {
   expect_error(get_person_iri("Jane Doe"), "utils::person")
   expect_error(get_person_iri(42), "utils::person")
 })
+
