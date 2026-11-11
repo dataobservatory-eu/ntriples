@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # ntriples
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/dataobservatory-eu/ntriples/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dataobservatory-eu/ntriples/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/dataobservatory-eu/ntriples/graph/badge.svg)](https://app.codecov.io/gh/dataobservatory-eu/ntriples)
 <!-- badges: end -->
 
 The **Resource Description Framework (RDF)** is a W3C standard for describing resources and their relationships. It makes metadata about datasets, visualisations, and other outputs created in R understandable outside the R ecosystem. **N-Triples** is a simple, line-based RDF format: each statement identifies a subject, predicate, and object. The `ntriples` package provides lightweight tools for creating these interoperable statements without a full RDF library.
