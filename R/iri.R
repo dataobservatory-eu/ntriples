@@ -1,4 +1,3 @@
-
 #' Create IRIs
 #'
 #' Validate absolute IRIs and assign the `iri` class.
@@ -42,4 +41,3 @@ iri <- function(x) {
 
   structure(x, class = c("iri", "character"))
 }
-
