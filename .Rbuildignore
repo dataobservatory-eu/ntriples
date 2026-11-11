@@ -11,3 +11,5 @@
 ^CONTRIBUTING\.md$
 ^codemeta\.json$
 ^CODE_OF_CONDUCT\.md$
+^\.github$
+^codecov\.yml$
