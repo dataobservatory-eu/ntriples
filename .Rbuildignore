@@ -1,3 +1,6 @@
 ^ntriples\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^\.positai$
+^\.claude$
+^review-ntriples.txt$
