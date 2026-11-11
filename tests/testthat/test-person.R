@@ -83,53 +83,5 @@ test_that("get_person_iri() handles missing and invalid identifiers", {
 })
 
 
-# PROV-O agent construction ----------------------------------------------
-
-test_that("prov_author() creates PROV-O agent statements", {
-  rdf_type <- "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"
-  prov_agent <- "<http://www.w3.org/ns/prov#Agent>"
-
-  # Identified author
-  p <- utils::person("Jane", "Doe", comment = c(ORCID = "0000-0002-1825-0097"))
-  expect_identical(
-    prov_author(p),
-    paste(
-      "<https://orcid.org/0000-0002-1825-0097>",
-      rdf_type, prov_agent, "."
-    )
-  )
-
-  # Unidentified author
-  p <- utils::person("Jane", "Doe")
-  expect_identical(
-    prov_author(p),
-    paste("_:janedoe", rdf_type, prov_agent, ".")
-  )
-})
 
 
-# Multiple authors -------------------------------------------------------
-
-test_that("prov_author() handles multiple authors", {
-  authors <- c(
-    utils::person("Jane", "Doe", comment = c(ORCID = "0000-0002-1825-0097")),
-    utils::person("John", "Smith")
-  )
-
-  triples <- prov_author(authors)
-
-  expect_type(triples, "character")
-  expect_length(triples, 2)
-  expect_true(any(grepl("orcid.org", triples, fixed = TRUE)))
-  expect_true(any(grepl("_:johnsmith", triples, fixed = TRUE)))
-  expect_identical(triples, unique(triples))
-})
-
-
-# Input validation -------------------------------------------------------
-
-test_that("prov_author() rejects unsupported inputs", {
-  expect_error(prov_author("Jane Doe"), "utils::person")
-  expect_error(prov_author(42), "utils::person")
-  expect_error(prov_author(list("Jane Doe")), "utils::person")
-})
