@@ -75,7 +75,7 @@ readable; N-Triples itself writes complete IRIs.
 ``` r
 prov <- "http://www.w3.org/ns/prov#"
 dcat <- "http://www.w3.org/ns/dcat#"
-dct  <- "http://purl.org/dc/terms/"
+dct <- "http://purl.org/dc/terms/"
 
 triples <- n_triples(c(
   n_triple(dataset_iri, "a", paste0(dcat, "Dataset")),

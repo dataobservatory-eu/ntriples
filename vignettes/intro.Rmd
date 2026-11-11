@@ -90,7 +90,7 @@ The `person_triples()` and `rdf_term()` functions handle RDFS labels and XSD dat
 ```{r prefix}
 prov <- "http://www.w3.org/ns/prov#"
 dcat <- "http://www.w3.org/ns/dcat#"
-dct  <- "http://purl.org/dc/terms/"
+dct <- "http://purl.org/dc/terms/"
 ```
 
 In RDF documentation, long IRIs are often abbreviated using prefixes. For example, `prov:wasAttributedTo` is shorthand for [`http://www.w3.org/ns/prov#wasAttributedTo`](http://www.w3.org/ns/prov#wasAttributedTo).
