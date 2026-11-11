@@ -1,0 +1,170 @@
+---
+title: "Introduction to ntriples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to ntriples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ntriples)
+```
+
+## Interoperable metadata for R resources
+
+The *Resource Description Framework*([RDF](https://www.w3.org/RDF/)) is a W3C standard for describing resources and their relationships using machine-readable statements. RDF makes metadata about resources created in R—such as datasets, visualisations, and analytical outputs—interoperable with systems outside the R ecosystem, without requiring those systems to understand R objects.
+
+RDF has several standard serialization formats. [N-Triples](https://www.w3.org/TR/n-triples/) is a particularly simple, line-oriented format in which each statement consists of a subject, predicate, and object. It is well suited to describing the metadata and structural semantics of tidy datasets, as well as their provenance, authorship, and relationships to other resources.
+
+The `ntriples` package provides lightweight tools for creating these statements directly from R.
+
+### Example: The growth of orange trees
+
+The built-in `Orange` dataset provides measurements of orange tree growth. We use the published dataset *Draper–Smith (1998): Growth of Orange Trees*, identified by DOI [10.5281/zenodo.14917851](https://doi.org/10.5281/zenodo.14917851), to demonstrate how to describe an R dataset using interoperable RDF metadata.
+
+We first load the dataset, represent its authors using `utils::person()`, and then serialize the dataset's identity, descriptive metadata, and provenance as N-Triples.
+
+The example uses [PROV-O,](https://www.w3.org/TR/prov-o/) the W3C provenance ontology, to describe agents and their relationships to the dataset.
+
+### Load the example dataset
+
+```{r loaddata}
+data("Orange", package = "datasets")
+head(Orange)
+```
+
+## Serialisation
+
+### Identify the published dataset and its authors
+
+```{r dataset-identifier}
+dataset_iri <- iri("https://doi.org/10.5281/zenodo.14917851")
+```
+
+R provides the `utils::person()` class for representing authors and contributors. We use it to describe the two creators of the Orange dataset.
+
+Where an authority identifier is available, `ntriples` can use it to identify the person across systems. Here, Draper has a VIAF identifier. For Smith, we use an RDF *blank node*: a local identifier for a resource that does not have a known global IRI.
+
+```{r authors}
+draper <- utils::person(
+  given = "N.R.", family = "Draper", role = "cre",
+  comment = c(VIAF = "http://viaf.org/viaf/84585260")
+)
+
+smith <- utils::person(
+  given = "H.", family = "Smith", role = "cre"
+)
+
+draper_iri <- iri("http://viaf.org/viaf/84585260")
+smith_id <- "_:smith"
+```
+
+The `role = "cre"` argument records the creator role in R. We express the relationship between the dataset and its creators separately using PROV-O. The blank-node label `_:smith` identifies Smith within this RDF serialization; it is not a persistent global identifier.
+
+### Create prefixes
+
+RDF vocabularies provide standard terms for describing resources and their relationships. Each vocabulary has a namespace IRI, commonly abbreviated using a *prefix*. For example, `prov:wasAttributedTo` refers to [`http://www.w3.org/ns/prov#wasAttributedTo`](http://www.w3.org/ns/prov#wasAttributedTo).
+
+We use several established RDF vocabularies and datatype definitions:
+
+- *PROV Ontology* ([PROV-O](https://www.w3.org/TR/prov-o/)) to express the PROV Data Model for provenance, or information about entities, activities, and people involved in producing a piece of data.
+
+- *Data Catalog Vocabulary* ([DCAT](https://www.w3.org/TR/vocab-dcat-3/)), provides a standard way to describe datasets and their distributions in data catalogues. By identifying Orange as a [`dcat:Dataset`](https://www.w3.org/TR/vocab-dcat-3/), we make its resource type understandable to data catalogues and other systems that use DCAT, independently of how the dataset is represented in R.
+
+- *Dublin Core Metadata Initiative Terms* ([DCMI](https://msi.dublincore.org/standards/dcmi-metadata-terms/)) for descriptive metadata, such as defining what is the "title" of a dataset or a publication
+
+- *RDF Schema* ([RDFS](https://www.w3.org/TR/rdf-schema/)) to provide human-readable labels for agents.
+
+- *XML Schema Datatypes*([XSD](https://www.w3.org/TR/swbp-xsch-datatypes/)) specifies the datatypes of literal values, such as strings, integers, and dates, so that they remain understandable outside of the R environment.
+
+The `person_triples()` and `rdf_term()` functions handle RDFS labels and XSD datatypes automatically, so we only need to define namespace variables for DCAT, DCT, and PROV-O in this example.
+
+```{r prefix}
+prov <- "http://www.w3.org/ns/prov#"
+dcat <- "http://www.w3.org/ns/dcat#"
+dct  <- "http://purl.org/dc/terms/"
+```
+
+In RDF documentation, long IRIs are often abbreviated using prefixes. For example, `prov:wasAttributedTo` is shorthand for [`http://www.w3.org/ns/prov#wasAttributedTo`](http://www.w3.org/ns/prov#wasAttributedTo).
+
+In our R code, we use `paste0(prov, "wasAttributedTo")` to construct this complete IRI without repeatedly typing the namespace. The N-Triples format requires complete IRIs, so the abbreviated form `prov:wasAttributedTo` does not appear in the serialized output.
+
+### Describe the dataset and its provenance
+
+```{r provenance}
+triples <- n_triples(c(
+  # Identify and describe the dataset
+  n_triple(dataset_iri, "a", paste0(dcat, "Dataset")),
+  n_triple(dataset_iri, paste0(dct, "title"), "Growth of Orange Trees"),
+
+  # Attribute the dataset to its creators
+  n_triple(dataset_iri, paste0(prov, "wasAttributedTo"), draper_iri),
+  n_triple(dataset_iri, paste0(prov, "wasAttributedTo"), smith_id),
+
+  # Describe the creators as RDF agents
+  person_triples(draper),
+  person_triples(smith, subject = smith_id)
+))
+```
+
+```{r show-triples}
+cat(triples, sep = "\n")
+```
+
+### Understanding the resulting N-Triples
+
+Each line is an RDF statement consisting of three terms:
+
+- **Subject:** the resource being described, such as the Orange dataset or one of its creators.
+- **Predicate:** the property or relationship being asserted, identified by an IRI from an RDF vocabulary.
+- **Object:** another resource, a blank node, or a literal value such as a title.
+
+For example, the statement using [`prov:wasAttributedTo`](https://www.w3.org/TR/prov-o/#wasAttributedTo) connects the dataset to one of its creators. The statements generated by `person_triples()` identify the creators as [`prov:Agent`](https://www.w3.org/TR/prov-o/#Agent) resources and describe their names using [`rdfs:label`](https://www.w3.org/TR/rdf-schema/#ch_label).
+
+The resulting RDF statements can be interpreted by other systems without knowing how the original R objects were constructed.
+
+### Serializing individual R values
+
+The `rdf_term()` function converts individual R values into RDF terms. It is also used internally by `n_triple()`.
+
+```{r terms}
+rdf_term("Growth of Orange Trees")
+rdf_term(42L)
+rdf_term(iri("urn:example:dataset"))
+```
+
+Character values become typed string literals, integers become `xsd:integer` literals, and explicit IRIs become RDF resource identifiers.
+
+RDF distinguishes between a literal and a resource identifier. For this reason, `iri()` can be used to make the intended interpretation explicit.
+
+### Exporting the metadata
+
+N-Triples is a plain-text format. Each statement occupies one line and ends with a period. The statements can therefore be written directly to a `.nt` file:
+
+```{r export, eval=FALSE}
+writeLines(triples, "orange-provenance.nt", useBytes = TRUE)
+```
+
+The resulting file can be imported into RDF databases, processed by Semantic Web tools, or exchanged with applications outside R.
+
+The original `Orange` data frame remains unchanged. Its observations can be distributed in a tabular format such as CSV, while the N-Triples file provides interoperable metadata about the dataset and its provenance.
+
+### Where to go next
+
+The `ntriples` package deliberately separates RDF serialization from higher-level data modelling. Its principal functions are:
+
+- `iri()` — identify and validate IRIs.
+- `rdf_term()` — serialize individual R values as RDF terms.
+- `n_triple()` — construct a single RDF statement.
+- `n_triples()` — collect statements and remove duplicates.
+- `person_triples()` — describe a person using PROV-O or FOAF.
+
+Together, these functions provide a lightweight foundation for describing R resources using standard RDF vocabularies.
