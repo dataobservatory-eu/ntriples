@@ -11,7 +11,7 @@ test_that("get_person_iri() resolves authority identifiers", {
 
   # VIAF
   p <- utils::person("Jane", "Doe", comment = c(VIAF = "123456"))
-  expect_identical(get_person_iri(p), "https://viaf.org/viaf/123456")
+  expect_identical(get_person_iri(p), "http://viaf.org/viaf/123456")
 
   # Wikidata
   p <- utils::person("Jane", "Doe", comment = c(wikidata = "Q42"))
@@ -36,9 +36,9 @@ test_that("get_person_iri() preserves complete authority IRIs", {
 
   # VIAF
   p <- utils::person("Jane", "Doe",
-    comment = c(VIAF = "https://viaf.org/viaf/123456")
+    comment = c(VIAF = "123456")
   )
-  expect_identical(get_person_iri(p), "https://viaf.org/viaf/123456")
+  expect_identical(get_person_iri(p), "http://viaf.org/viaf/123456")
 
   # Wikidata
   p <- utils::person("Jane", "Doe",
