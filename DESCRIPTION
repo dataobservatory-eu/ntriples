@@ -16,7 +16,7 @@ Description: Provides lightweight, dependency-minimal tools for
 Language: en-GB
 URL: https://ntriples.dataobservatory.eu/
 BugReports: https://github.com/dataobservatory-eu/ntriples/issues/
-License: GPL (>= 3) + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests:
