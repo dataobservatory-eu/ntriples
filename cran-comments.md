@@ -1,8 +1,8 @@
 ## Submission
 
-This is the first CRAN submission of `ntriples`.
-
-The package extracts lightweight RDF N-Triples serialization functionality originally developed for the `dataset` R package into a standalone package.
+This is the resubmission of the first CRAN submission of `ntriples`. The package extracts lightweight RDF N-Triples serialization functionality originally developed for the `dataset` R package into a standalone package.\
+\
+The cause of resubmission is a typo in the GPL license, which is now fixed.
 
 ## Test environments
 
